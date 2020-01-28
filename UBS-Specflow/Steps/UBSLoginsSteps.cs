@@ -1,26 +1,19 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using UBS_Specflow.Pages;
+using UBS_Specflow.SeleniumDriver;
 
 namespace UBS_Specflow.Steps
 {
     [Binding]
     class UBSLoginsSteps
     {
-        public static IWebDriver driver = new ChromeDriver();
         static UBSLoginsPage ubsLoginsPage;
        
         [BeforeScenario]
         public static void TestInitialize()
         {
-            ubsLoginsPage = new UBSLoginsPage(driver);            
+            ubsLoginsPage = new UBSLoginsPage(DriverProvider.Driver);            
         }
 
 
@@ -45,13 +38,8 @@ namespace UBS_Specflow.Steps
         [Then(@"I should reach the expected (.*)")]
         public void ThenIShouldReachTheExpected(string url)
         {
-            Assert.IsTrue(driver.Url.Equals(url));
+            Assert.IsTrue(DriverProvider.Driver.Url.Equals(url));
         }
-
-        [AfterFeature]
-        public static void Cleanup()
-        {
-            driver.Quit();
-        }
+        
     }
 }

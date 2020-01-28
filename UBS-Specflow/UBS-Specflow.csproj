@@ -132,6 +132,8 @@
     <Compile Include="Pages\JobBoardPage.cs" />
     <Compile Include="Pages\SearchJobsPage.cs" />
     <Compile Include="Pages\UBSLoginsPage.cs" />
+    <Compile Include="SeleniumDriver\DriverProvider.cs" />
+    <Compile Include="Steps\BaseSteps.cs" />
     <Compile Include="Steps\SearchJobsSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\UBSLoginsSteps.cs" />

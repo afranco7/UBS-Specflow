@@ -29,41 +29,45 @@ namespace UBS_Specflow.Pages
             }
 
             private readonly By keywordInputBy = By.Id("sidebarSearchbox__1HZ");
-            public IWebElement keywordInput => driver.FindElement(keywordInputBy);
+            public IWebElement KeywordInput => driver.FindElement(keywordInputBy);
 
             private readonly By locationInputBy = By.Id("sidebarSearchbox__1I0");
-            public IWebElement locationInput => driver.FindElement(locationInputBy);
+            public IWebElement LocationInput => driver.FindElement(locationInputBy);
 
             private readonly By searchButtonBy = By.Id("searchControls_BUTTON_2");
-            public IWebElement searchButton => driver.FindElement(searchButtonBy);
+            public IWebElement SearchButton => driver.FindElement(searchButtonBy);
 
             private readonly By resultMessageBy = By.XPath("//h2[@role='alert']");
-            public IWebElement resultMessage => driver.FindElement(resultMessageBy);
+            public IWebElement ResultMessage => driver.FindElement(resultMessageBy);
+
+            private readonly By firstResultLinkBy = By.XPath("//*[@id='Job_0']");
+            public IWebElement FirstResultLink => driver.FindElement(firstResultLinkBy);
 
             public void TypeOnSearchForm(string keyword, string location)
             {
                 Actions.SwitchDriverToNewTab(driver);
                 JavaScriptActions.VerifyPageCompleteStateJs(driver);
-                Actions.Type(keywordInput,keyword);
-                Actions.Type(locationInput,location);
+                Actions.Type(KeywordInput,keyword);
+                Actions.Type(LocationInput,location);
             }
 
             public void ClickOnSearchButton()
             {
-                Actions.ClickOn(driver,searchButton);
+                Actions.ClickOn(driver,SearchButton);
             }
 
-            public string GetResultMessage()
+            public string GetResultMessage(bool expectedResult)
             {              
                 
-                try
+                if(!expectedResult)
                 {
                     Actions.WaitForElement(driver, resultMessageBy);
-                    return resultMessage.Text;
+                    return ResultMessage.Text;
                 }
-                catch
+                else
                 {
-                    return "One or more than one results found";
+                    Actions.WaitForElement(driver, firstResultLinkBy);
+                    return FirstResultLink.Text;
                 }
 
             }

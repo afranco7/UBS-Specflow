@@ -75,15 +75,15 @@ namespace UBS_Specflow.Feature
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify that the search jobs Functionality")]
+        [NUnit.Framework.DescriptionAttribute("Verify the search jobs Functionality")]
         [NUnit.Framework.TestCaseAttribute("software", "Barranquilla", "false", null)]
         [NUnit.Framework.TestCaseAttribute("software", "Poland", "true", null)]
         [NUnit.Framework.TestCaseAttribute("software", "China", "true", null)]
         [NUnit.Framework.TestCaseAttribute("software", "Cartagena", "false", null)]
-        public virtual void VerifyThatTheSearchJobsFunctionality(string keyword, string location, string expectedResult, string[] exampleTags)
+        public virtual void VerifyTheSearchJobsFunctionality(string keyword, string location, string expectedResult, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that the search jobs Functionality", null, exampleTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the search jobs Functionality", null, exampleTags);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

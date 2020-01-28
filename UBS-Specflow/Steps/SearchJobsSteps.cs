@@ -1,31 +1,24 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using UBS_Specflow.Pages;
+using UBS_Specflow.SeleniumDriver;
 
 namespace UBS_Specflow.Steps
 {
     [Binding]
     class SearchJobsSteps
     {
-        public static IWebDriver driver = new ChromeDriver();
+                 
         static HomePage homePage;
         static JobBoardPage jobBoardPage;
-        static SearchJobsPage searchJobsPage;
-        
+        static SearchJobsPage searchJobsPage;        
 
         [BeforeScenario]
         public static void TestInitialize() 
         {            
-            homePage = new HomePage(driver);
-            jobBoardPage = new JobBoardPage(driver);
-            searchJobsPage = new SearchJobsPage(driver);
+            homePage = new HomePage(DriverProvider.Driver);
+            jobBoardPage = new JobBoardPage(DriverProvider.Driver);
+            searchJobsPage = new SearchJobsPage(DriverProvider.Driver);
         }
              
 
@@ -38,15 +31,13 @@ namespace UBS_Specflow.Steps
         [Given]
         public void GivenIHaveSelectedSearchJobsOnCareersDropdown()
         {
-            homePage.SelectSearchJobsOnCareersDropdown();
-            string url = driver.Url;
+            homePage.SelectSearchJobsOnCareersDropdown();            
         }
 
         [When]
         public void WhenISelectProfessionalsLinkOnAmericas()
         {
-            jobBoardPage.SelectProfessionalsLinkAmericas();
-            string url = driver.Url;
+            jobBoardPage.SelectProfessionalsLinkAmericas();           
         }
 
         [When(@"I type the search (.*) and (.*)")]
@@ -64,22 +55,17 @@ namespace UBS_Specflow.Steps
         [Then(@"I should see the (.*)")]
         public void ThenIShouldSeeTheResults(bool expectedResult)
         {
-            string resultMessage = searchJobsPage.searchForm.GetResultMessage();
+            string resultMessage = searchJobsPage.searchForm.GetResultMessage(expectedResult);
 
             if (expectedResult)
             {
-                Assert.AreEqual("One or more than one results found", resultMessage);
+                Assert.IsFalse(resultMessage.Equals("There are no jobs that match your criteria"), "text found: " + resultMessage);
             }
             else
             {
-                Assert.AreEqual("There are no jobs that match your criteria", resultMessage);
+                Assert.IsTrue(resultMessage.Equals("There are no jobs that match your criteria"),"text found: "+resultMessage);
             }
-        }
+        }       
 
-        [AfterFeature]
-        public static void Cleanup()
-        {
-            driver.Quit();
-        }
     }
 }
